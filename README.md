@@ -1,6 +1,6 @@
 # Sample Sitecore Component
 
-A example Sitecore component implementing a News Item List and Filtering
+An example Sitecore component implementing a News Item List and Filtering
 
 # Features
 
