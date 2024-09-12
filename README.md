@@ -1,0 +1,2 @@
+# SampleSitecoreComponent
+Sample Sitecore Component
