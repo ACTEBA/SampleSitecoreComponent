@@ -1,0 +1,84 @@
+﻿@model Demo.Feature.NewsList.Models.NewsListDataModel
+@using Sitecore.Data.Items;
+@using Sitecore.Mvc
+@using Sitecore.Mvc.Presentation;
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
+@if (Model != null)
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3> Filter News List</h3>
+                <div>
+                    @if (Model.Categories != null && Model.Categories.Count() > 0)
+                    {
+                        <select id="category-filter-selection">
+                            <option value="" selected></option>
+                            @foreach (Item categoryItem in Model.Categories)
+                            {
+                                <option value="@categoryItem.ID.ToString()">@categoryItem.Name</option>
+                            }
+                        </select>
+                    }
+                </div>
+                <div>
+                    <p>Select a Date to find Articles published before the selected Date</p>
+                    <input class="form-control" id="dateSelector" name="DateSelector" type="date" value="" />
+                </div>
+
+                <div>
+                    <input type="submit" value="Search" onclick="filter()" />
+                    <p class="text-danger" id="search-warning"></p>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+
+                @if (Model.NewsItems != null && Model.NewsItems.Count() > 0)
+                {
+                    <row>
+                        @foreach (Item newsItem in Model.NewsItems)
+                        {
+                            <div class="col-md-4 newsItemCard">
+                                <div class="ImageHeader">
+                                    @Html.Sitecore().Field("HeaderImage", newsItem, new { @class = "img-responsive" })
+                                </div>
+                                <h4>
+                                    @Html.Sitecore().Field("Title", newsItem)
+                                </h4>
+                                <p>
+                                    @Html.Sitecore().Field("Description", newsItem)
+                                </p>
+                            </div>
+                        }
+                    </row>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function filter() {
+            let categoryFilter = $("#category-filter-selection").val();
+            let dateFilter = $("#dateSelector").val();
+
+            if (!categoryFilter && !dateFilter) {
+                $('#search-warning').text("A Search Filter is required.");
+            }
+            else {
+                var filterData = { categoryFilter, dateFilter };
+
+                $.ajax({
+                    type: "POST",
+                    url: "api/NewsList/FilterNewsItems",
+                    data: filterData,
+                    contentType: 'application/json;',
+                    success: function (data) { },
+                    error: function (data) { }
+                });
+            }
+    </script>
+}
