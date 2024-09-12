@@ -8,8 +8,8 @@ This component demonstrates the following features including:
 
 * Sitecore MVC Component Example
 * Filtering based on Category and Publish Date
-* Using a Mockup Helix Approach
+* Using a mockup Helix approach
 
 # Notes
 
-This code is theoretical as it was not tested in a working Sitecore environment and there are no properties set for any sitecore related queries.
+This code is theoretical as it was not tested in a working Sitecore environment and no configuration values are set.
